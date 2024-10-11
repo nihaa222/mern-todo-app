@@ -7,11 +7,22 @@ const todoRoutes = require("./routes/todoRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const path = require("path");
 
 // Middleware
 app.use(express.json());
 app.use(cors());
+
+const buildPath = path.join(__dirname, "../client/build");
+app.use(express.static(buildPath));
+
+// API routes
 app.use("/api/todos", todoRoutes);
+
+// Serve the React app for any other request (for React Router support)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(buildPath, "index.html"));
+});
 
 // MongoDB connection
 mongoose
