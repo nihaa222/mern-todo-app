@@ -15,6 +15,9 @@ app.use(cors());
 
 const buildPath = path.join(__dirname, "../client/build");
 app.use(express.static(buildPath));
+app.listen(PORT, "0.0.0.0", () =>
+  console.log(`Server running on port ${PORT}`)
+);
 
 // API routes
 app.use("/api/todos", todoRoutes);
